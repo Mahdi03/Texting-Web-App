@@ -1,0 +1,99 @@
+/*Slabo 27px*/
+
+@import url('https://fonts.googleapis.com/css?family=Slabo+27px');
+* {
+    --login-or-register-button-background-color: rgb(29, 162, 214);
+    --login-or-register-page-background-color: rgb(118, 235, 153);
+    --login-or-register-input-background-color: rgba(255, 251, 0, 0.244);
+    --login-or-register-input-border-color: fuchsia;
+    --login-or-register-input-text-color: black;
+}
+
+.bodyForm {
+    background-color: var(--login-or-register-page-background-color);
+}
+
+#login *,
+#register * {
+    font-family: 'Slabo 27px', serif;
+    font-size: 25px;
+}
+
+#login,
+#register {
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    resize: both;
+}
+
+#login h1,
+#register h1 {
+    text-align: center;
+    font-size: 40px;
+}
+
+#login #form,
+#register #form {
+    padding: 20px;
+    resize: both;
+}
+
+#login th,
+#login td,
+#register th,
+#register td {
+    padding: 5px;
+}
+
+#login td[colspan="2"],
+#register td[colspan="2"] {
+    text-align: center;
+    margin: 0 auto;
+}
+
+#login input,
+#register input {
+    background-color: var(--login-or-register-input-background-color);
+    border-radius: 25px;
+    border: 2px dashed;
+    border-color: var(--login-or-register-input-border-color);
+    padding: 10px;
+    width: 120%;
+    font-size: 20px;
+    color: var(--login-or-register-input-text-color);
+}
+
+#loginButton,
+#registerButton {
+    padding: 20px;
+    border: none;
+    border-radius: 25px;
+    background-color: var(--login-or-register-button-background-color);
+}
+
+#loginButton:hover,
+#registerButton:hover,
+#login table select:hover,
+#register table select:hover,
+#login table select *:hover,
+#register table select *:hover {
+    cursor: pointer;
+}
+
+#mainPage .column.left {
+    float: left;
+    width: 20%;
+}
+
+#mainPage .column.right {
+    float: right;
+    width: 75%;
+}
+
+#mainPage .column {
+    border: 3px solid rgb(50, 20, 200);
+    border-radius: 30px;
+}

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Homepage</title>
+    <script src="loggedIn.js"></script>
+</head>
+
+<body>
+    <div id="mainPage">
+        <h1>Chatting Application</h1>
+
+        <div class="signOut">
+            <button id="signOutButton">Sign Out</button>
+        </div>
+        <textarea></textarea>
+        <div id="root">
+            <div class="column left">
+                <!--Add search bar here-->
+                <div id="searchBar">
+                    <input type="text" id="searchText" /><br />
+                </div>
+                <!--Add List Of Chats Here-->
+                <div id="chats">
+                    <!--Add Each Individual Chat Here-->
+                </div>
+            </div>
+            <div class="column right">
+                <!--Add Chats onclick Here-->
+                <div id="placeholder">
+                    Click on a chat on the left to open it.
+                </div>
+                <div id="">
+                    <div id="">
+                    </div>
+                </div>
+            </div>
+            <script>
+                var searchText = document.querySelector("#searchText");
+                searchText.oninput = function () {
+                    if (searchText.value !== "") {
+                    //Search Chat Array For Chats that the User is enrolled in
+                    }
+                    else {
+                        //Remove Search Results and replace with list of all chats
+                    }
+                };
+            </script>
+        </div>
+        <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+    -->
+        <script src="signOut.js"></script>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Register</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="md5.js"></script>
+</head>
+
+<body>
+    <div id="register">
+
+        <h1>Register Now:</h1>
+        <form name="register" action="" method="POST" onsubmit="event.preventDefault()">
+            <table>
+                <tr>
+                    <th>Full name: </th>
+                    <td><input type="text" name="fullName" required /></td>
+                </tr>
+                <tr>
+                    <th>Choose a username: </th>
+                    <td><input type="text" name="username" required /></td>
+                </tr>
+                <tr>
+                    <th>Choose a password: </th>
+                    <td><input type="password" name="password" minlength="7" required /></td>
+                </tr>
+                <tr>
+                    <th>Phone Number: </th>
+                    <td><input type="number" name="phoneNumber" required /></td>
+                </tr>
+                <tr>
+                    <th>Service Provider: </th>
+                    <td><select name="serviceProvider">
+                      <option value="Verizon">Verizon</option>
+                      <option value="ATT">AT&T</option>
+                      <option value="TMobile">T-Mobile</option>
+                      <option value="Sprint">Sprint</option>
+                    </select></td>
+                </tr>
+                <tr>
+                    <th>Email address: </th>
+                    <td><input type="email" name="emailAddress" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><button id="registerButton">Register Now!!</button></td>
+                </tr>
+            </table>
+        </form>
+        <!--Firebase Links-->
+        <script src="https://www.gstatic.com/firebasejs/5.11.1/firebase-app.js"></script>
+        <!-- Add Firebase products that you want to use -->
+        <script src="https://www.gstatic.com/firebasejs/5.11.1/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/5.11.1/firebase-firestore.js"></script>
+        <!--Script To Handle Form-->
+        <script>
+            //Global Vars
+            var firebaseConfig = {
+                apiKey: "AIzaSyC1BH8wkTiP4NheKTboRiDJjaho6Gomg7Y",
+                authDomain: "chatting-application-6969.firebaseapp.com",
+                databaseURL: "https://chatting-application-6969.firebaseio.com",
+                projectId: "chatting-application-6969",
+                storageBucket: "chatting-application-6969.appspot.com",
+                messagingSenderId: "709778760212",
+                appId: "1:709778760212:web:c0dc24eadedcbcc1"
+            };
+            firebase.initializeApp(firebaseConfig);
+            var db = firebase.firestore();
+            var registerButton = document.querySelector("#registerButton");
+            //Main Register Function
+            registerButton.onclick = function() {
+                //Locally Global Variables
+                var fullName = document.forms["register"]["fullName"].value;
+                var username = document.forms["register"]["username"].value.toLowerCase();
+                //The MD5 is a way to hash the password, that way the real password is safe and only the hash is used
+                var password = md5(document.forms["register"]["password"].value);
+                var serviceProvider = document.forms["register"]["serviceProvider"].value;
+                //Simple If Statement that adds appropriate email suffix based on Service Provider
+                if (serviceProvider === "Verizon") {
+                    serviceProvider = "@vtext.com";
+                } else if (serviceProvider === "ATT") {
+                    serviceProvider = "@txt.att.net";
+                } else if (serviceProvider === "TMobile") {
+                    serviceProvider = "@tmomail.net";
+                } else if (serviceProvider === "Sprint") {
+                    serviceProvider = "@messaging.sprintpcs.com";
+                }
+                var phoneNumber = document.forms["register"]["phoneNumber"].value + serviceProvider;
+                var emailAddress = document.forms["register"]["emailAddress"].value;
+                //Checks The Database If The Username Is Already Taken Or Not
+                db.collection("Users").where("username", "==", username).get()
+                    .then(function(querySnapshot) {
+                        console.log(0);
+                        //Checks Each Individual Result -- If there are no results, than this code will not run
+                        querySnapshot.forEach(function(doc) {
+                            //If any result exists, stop here
+                            console.log(1);
+                            if (doc.data()) {
+                                throw "Error";
+                            }
+                        });
+                        //If not
+                        console.log(3);
+                        //Add All Of The User Info To The Database
+                        db.collection("Users").doc(username).set({
+                                fullName: fullName,
+                                username: username,
+                                password: password,
+                                phoneNumber: phoneNumber,
+                                emailAddress: emailAddress
+                            })
+                            .then(function() {
+                                console.log(4);
+                                //If it succeeds, give user the heads up and then take them to their new homepage
+                                alert("Your account under the username " + username + " has been sucessfully created. You will now be redirected to your homepage.");
+                                //Place Code Underneath to Handle Keeping user Logged In For Present and Future Visits, along with redirecting to a homepage
+                                //Code Goes Here
+                            })
+                            .catch(function(error) {
+                                console.log(5);
+                                //If it fails, tell user to try again later (we don't care about the error message during production, because it is unlikely after our many tests)
+                                alert("I'm sorry but this username is already taken!! Please Try Another One");
+                            });
+                    })
+                    .catch(function(error) {
+                        console.log(6);
+                        //If checking the database originally for duplicate usernames fails, then give the user the same warning as above
+                        alert("I'm sorry but this username is already taken!! Please Try Another One");
+                    });
+            };
+        </script>
+    </div>
+</body>
+</html>
